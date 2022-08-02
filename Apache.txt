@@ -1,0 +1,35 @@
+CONFIGURAÇÕES BÁSICAS
+	
+Diretório sites-avaiable
+	sites administrados pelo servidor
+	criar um arquivo .conf para cada página hospedada
+		Configuração do arquivo
+	Tag <VistualHost *:80>
+		ServerAdmin <email do admin>
+		ServerName <domínio do servidor>
+		ServerAlias <alias do dominio>
+		DocumentRoot <caminho até os arquivos do site>
+		SSLEngine on <habilita modulo ssl>
+		SSLCertificateFile <caminho para o certificado ssl arquivo.crt>
+		SSLCertificateKeyFile <caminho para a chame ssl arquivo.key>
+		</VirtualHost>
+
+OBS.: Criar um diretório ssl dentro de /etc/apache2 e colocar certificados e chaves
+Usar comando openssl para criar certificados e chaves
+
+Diretório sites-enable
+	sites "No Ar"
+	utilizar comando a2ensite <nome do site.conf> para habiltar
+	utilizar comando a2dissite <nome do site.conf> para desabilitar
+
+Arquivo ports.conf
+	armazena as portas que serão ouvidas pelo servidor
+
+Módulos
+	habilitar: sudo a2enmod <modulo>
+	Desabilitar: sudo a2dismod <modulo>
+
+Habilitar SSL
+	openssl rep -x509 -nodes -days 365 -newkey rsa:2048 -keyout <caminho até chave> -out <caminho atpe certificado>
+
+OBS.: Os caminhos até os arquivos precisam ser os mesmos dos indicados no VirtualHost
