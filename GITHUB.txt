@@ -1,9 +1,13 @@
 CRIANDO PROJETO NO GIT
 
 COMANDOS
-	GIT STATUS
-	GIT ADD
-	GIT COMMIT -M "MENSAGEM"
-	GIT PUSH
-	GIT REFLOG
-	GIT RESET --HARD <ID>
+	GIT STATUS //verifica atualizações
+	GIT ADD //adiciona ao controle de versão
+	GIT COMMIT -M "MENSAGEM" //adiciona versão
+	GIT PUSH //envia para nuvem
+	GIT REFLOG //mostra histórico de versões
+	GIT RESET --HARD <ID> // retorna versão ID
+	GIT BRANCH <NOME> //cria nova branch
+	GIT BRANCH // verifica branches
+	GIT CHECKOUT <NOME> //muda de branch
+	GIT MERGE <NOME DA BRANCH> //atualiza branch atual com <nome da branch>
