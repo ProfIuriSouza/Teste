@@ -1,0 +1,36 @@
+/etc/network/interfaces
+
+auto lo
+iface lo inet loopback
+
+auto enp0s3
+iface enp0s3 inet static
+	address
+	netmask
+	network
+	broadcast
+	gateway
+
+Definir nosso servidor como DNS
+/etc/resolv.conf
+	nameserver <IP do servidor>
+
+
+#verificar portas e serviços
+
+/etc/services
+
+sudo ss -tulpn
+
+-t ativa listagem tcp
+-u ativa listagem udp
+-l lista de soquetes em escuta
+-n mostera número da porta
+-p mostra nome do processo~
+
+
+listagem de nomes
+arquivo /etc/hosts (origem do localhost)
+
+testar domínios
+nslookup

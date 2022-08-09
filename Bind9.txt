@@ -1,0 +1,48 @@
+#CONFIGURAÇÕES
+
+/etc/bind
+
+arquivo named.conf.options
+	adicionar servidor DNS de encaminhamento
+	parâmetro forward (normalmente comentado)
+	bora prática: servidor DNS Google (8.8.8.8)
+
+Configurações de zonas:
+	Cada zona terá seu arquivo de configuração
+Zona de pesquisa direta> arquivo db.<domínio>
+Zona de pesquisa reversa> arquivo db.<Prefixo IP>
+
+dica de boas práticas: crie os arquivos de zona direta e reversa
+a partir de cópias dos arquivos localhost (db.local e db.127)
+
+arquivo de zona direta
+
+$TTL	86400
+@	IN	SOA	admin.<domínio>.	root.<domínio>. (
+			2022080901	;Serial //data de sincronização
+			3600		; Refrsh // atualiza a cada hora
+			720		; Retry //repete
+			1209600		; Expire //prazo para expirar
+			86400 ) ; Negative Cache TTL
+;
+		IN	NS	admin.<domínio>.
+		IN	A	<IP>
+admin		IN	A	<IP>
+www		IN	CNAME	<domínio>.
+
+
+
+arquivo de zona reversa
+
+$TTL	86400 //24horas
+@	IN	SOA	<domínio>.	root.<domínio>. (
+			2022080901	;Serial //data de sincronização
+			3600		; Refrsh // atualiza a cada hora
+			720		; Retry //repete
+			1209600		; Expire //prazo para expirar
+			86400 ) ; Negative Cache TTL // TTL mínimo de um dia
+;
+		IN	NS	admin.
+<último octeto>		IN	PTR	admin.<domínio>.
+
+Obs: TTL > Time To Live
