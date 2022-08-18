@@ -1,0 +1,23 @@
+INSTALAÇÃO DE REPOSITÓRIO MYSQL
+
+wget http://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb -O mysql-apt-config.deb
+
+sudo dpkg -i mysql-apt-config.deb
+
+//escolha a versão
+
+sudo dpkg-reconfigure mysql-apt-config
+
+
+sudo apt update
+
+sudo apt install mysql-server
+
+//definição de senha de root
+
+sudo mysql_secure_installation //definição de modo seguro, opcional
+
+sudo systemctl restart mysql.service
+
+mysql -u root -p
+
