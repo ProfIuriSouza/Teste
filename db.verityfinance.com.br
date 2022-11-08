@@ -1,0 +1,14 @@
+$TTL    86400
+@    IN    SOA    admin.verityfinance.com.br.    root.verityfinance.com.br. (
+
+           2022081101    ;Serial
+           3600        ; Refrsh
+           720        ; Retry
+           1209600        ; Expire
+           86400 ) ; Negative Cache TTL
+;
+
+          IN    NS        admin.verityfinance.com.br.
+          IN    A         192.168.0.6
+admin     IN    A         192.168.0.6
+www       IN    CNAME     verityfinance.com.br.
