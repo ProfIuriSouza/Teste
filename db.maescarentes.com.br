@@ -1,0 +1,14 @@
+$TTL    86400
+@    IN    SOA    admin.maescarentes.com.br.    root.maescarentes.com.br. (
+
+           2022081101    ;Serial
+           3600        ; Refrsh
+           720        ; Retry
+           1209600        ; Expire
+           86400 ) ; Negative Cache TTL
+;
+
+          IN    NS        admin.maescarentes.com.br.
+          IN    A         192.168.0.26
+admin     IN    A         192.168.0.26
+www       IN    CNAME     maescarentes.com.br.
