@@ -1,0 +1,15 @@
+
+$TTL    86400
+@    IN    SOA    admin.pc.com.br.    root.pc.com.br. (
+
+           2022081101    ;Serial
+           3600        ; Refrsh
+           720        ; Retry
+           1209600        ; Expire
+           86400 ) ; Negative Cache TTL
+;
+
+          IN    NS        admin.pc.com.br.
+          IN    A         192.168.0.35
+admin     IN    A         192.168.0.35
+www       IN    CNAME     pc.com.br.
