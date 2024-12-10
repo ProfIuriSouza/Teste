@@ -1,0 +1,14 @@
+$TTL    86400
+@    IN    SOA    admin.safewhells.com.br.    root.safewhells.com.br. (
+
+           2022081101    ;Serial
+           3600        ; Refrsh
+           720        ; Retry
+           1209600        ; Expire
+           86400 ) ; Negative Cache TTL
+;
+
+          IN    NS        admin.safewhells.com.br.
+          IN    A         192.168.0.34
+admin     IN    A         192.168.0.34
+www       IN    CNAME     safewhells.com.br.

@@ -1,0 +1,14 @@
+$TTL    86400
+@    IN    SOA    admin.bibliotecaespecial.com.br.    root.bibliotecaespecial.com.br. (
+
+           2022081101    ;Serial
+           3600        ; Refrsh
+           720        ; Retry
+           1209600        ; Expire
+           86400 ) ; Negative Cache TTL
+;
+
+          IN    NS        admin.bibliotecaespecial.com.br.
+          IN    A         192.168.0.190
+admin     IN    A         192.168.0.190
+www       IN    CNAME     bibliotecaespecial.com.br.

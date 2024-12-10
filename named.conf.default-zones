@@ -1,0 +1,119 @@
+// zona 1
+zone "." {
+  type hint;
+  file "/usr/share/dns/root.hints";
+};
+
+// zona 2
+zone "localhost" {
+  type master;
+  file "/etc/bind/db.local";
+};
+
+//zona 3
+zone "127.in-addr.arpa" {
+  type master;
+  file "/etc/bind/db.127";
+};
+
+//zona 4
+zone "0.in-addr.arpa" {
+  type master;
+  file "/etc/bind/db.0";
+};
+
+//zona 5
+zone "255.in-addr.arpa" {
+  type master;
+  file "/etc/bind/db.255";
+};
+
+//zona 6
+zone "mariste.com.br" {
+  type master;
+  file "/etc/bind/db.mariste.com.br";
+};
+
+//zona 7
+zone "safewhells.com.br" {
+  type master;
+  file "/etc/bind/db.safewhells.com.br";
+};
+
+//zona 8
+zone "iflearning.com" {
+  type master;
+  file "/etc/bind/db.iflearning.com";
+};
+
+//zona 9
+zone "pc.com.br" {
+  type master;
+  file "/etc/bind/db.pc.com.br";
+};
+
+//zona 10
+zone "fluxodigno.com.br" {
+  type master;
+  file "/etc/bind/db.fluxodigno.com.br";
+};
+
+//zona 11
+zone "doesangue.com.br" {
+  type master;
+  file "/etc/bind/db.doesangue.com.br";
+};
+
+//zona 12
+zone "verityfinance.com.br" {
+  type master;
+  file "/etc/bind/db.verityfinance.com.br";
+};
+
+//zona 13
+zone "usuariolocal.com" {
+  type master;
+  file "/etc/bind/db.usuariolocal.com";
+};
+
+//zona 14
+zone "bibliotecaespecial.com.br" {
+  type master;
+  file "/etc/bind/db.bibliotecaespecial.com.br";
+};
+
+//zona 15
+zone "maescarentes.com.br" {
+  type master;
+  file "/etc/bind/db.maescarentes.com.br";
+};
+
+//zona 16
+zone "vacinas.com.br" {
+  type master;
+  file "/etc/bind/db.vacinas.com.br";
+};
+
+//zona 17
+zone "vacinas.com.br" {
+  type master;
+  file "/etc/bind/db.vacinas.com.br";
+};
+
+//zona 18
+zone "animaissilvestres.com.br" {
+  type master;
+  file "/etc/bind/db.animaissilvestres.com.br";
+};
+
+//zona 19
+zone "saab.com.br" {
+  type master;
+  file "/etc/bind/db.saab.com.br";
+};
+
+//zona 20
+zone "christmasmail.com.br" {
+  type master;
+  file "/etc/bind/db.christmasmail.com.br";
+};

@@ -21,3 +21,28 @@ sudo systemctl restart mysql.service
 
 mysql -u root -p
 
+
+versão 2
+
+ATUALIZAR DEBIAN
+sudo apt update && sudo apt upgrade
+
+INSTALE PACOTES NECESSÁRIOS
+sudo apt install software-properties-common apt-transport-https wget ca-certificates gnupg2 -y
+
+IMPORTAR O REPOSITÓRIO
+sudo wget -O- http://repo.mysql.com/RPM-GPG-KEY-mysql-2022 | gpg --dearmor | sudo tee /usr/share/keyrings/mysql.gpg
+
+echo 'deb [signed-by=/usr/share/keyrings/mysql.gpg] http://repo.mysql.com/apt/debian bullseye mysql-8.0' | sudo tee /etc/apt/sources.list.d/mysql.list
+
+sudo apt update
+
+sudo apt install mysql-community-server -y
+
+VERIFICAÇÃO DE INSTALAÇÃO
+apt policy mysql-community-server
+
+VERIFICANDO STATUS
+systemctl status mysql
+
+
