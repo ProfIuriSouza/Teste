@@ -12,6 +12,13 @@ header {
     
 }
 
+.header-container{
+    display: flex;
+    
+    justify-content: space-between;
+
+}
+
 
 .imagem{
     max-width: 200px;
@@ -20,7 +27,9 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     position: relative;
-    margin: 50px;
+    margin: auto;
+    object-fit: contain;
+    
 }
 
 body{
@@ -58,16 +67,18 @@ div{
   }
 
 .card img {
-    object-fit: cover;    
+    object-fit: contain;    
     border-radius: 10px;
     max-width: 250px;
     max-height: 250px;
 }
 
 footer {
-    background-color: #F0F8FF;
+    background-image: url('https://img.freepik.com/vetores-gratis/fundo-branco-tecnologia_23-2148390329.jpg');
     padding: 20px;
     text-align: center;
+    align-items: center;
+    border: 1px solid #ccc;
 }
 
 p{
