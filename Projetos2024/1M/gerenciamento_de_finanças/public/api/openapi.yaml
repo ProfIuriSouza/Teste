@@ -1,0 +1,591 @@
+openapi: '3.0.3'
+info:
+  title: Sistema de Gerenciamento Financeiro
+  description: No intuito de auxiliar o trabalho manual feito por um mestre de obra - João Bosco, avô de Ricken Diniz -, surgiu a ideia de criar um serviço que automatize-o. O projeto será responsável por substituir a tarefa da escrita manual de planilhas e notas fiscais no Word, para isso, ele irá contar com formulários interativos que irão receber apenas os dados e escrever automaticamente as planilhas, preparando-as prontamente para a impressão.
+  version: '1.0'
+servers:
+  - url: http://{host}:{porta}/api
+    variables:
+      host:
+        default: localhost
+      porta:
+        default: '8000'
+
+paths:
+  /users:
+    get:
+      operationId: get
+      summary: Acessar usuários
+      responses:
+        '200':
+          description: OK
+      
+    post:
+      summary: Cadastrar um usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nome do usuário
+                  example: Kaiane
+                email:
+                  type: string
+                  description: Email do usuário
+                  example: kaiane.xxxx@gmail.com
+                job:
+                  type: string
+                  description: Função do usuário
+                  example: Mestre de obras
+                password:
+                  type: string
+                  description: Senha do usuário
+                  example: '123123'
+      responses:
+        201:
+          description: Usuário criado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: O URI do novo recurso criado.
+        400:
+          description: Requisição inválida
+
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      summary: Acessa um usuário
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  job:
+                    type: string
+                  password:
+                    type: string
+        404:
+          description: Não encontrado
+
+    delete:
+      summary: Apaga um usuário
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Não encontrado.
+
+    put:
+      summary: Altera um usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nome do usuário
+                  example: Kaiane
+                email:
+                  type: string
+                  description: Email do usuário
+                  example: kaiane.xxxx@gmail.com
+                job:
+                  type: string
+                  description: Função do usuário
+                  example: Mestre de obras
+                password:
+                  type: string
+                  description: Senha do usuário
+                  example: '123123'
+      responses:
+        200:
+          description: OK
+        404:
+          description: Não encontado.
+
+  /telefones:
+    get:
+      operationId: get
+      summary: Acessar telefones
+      responses:
+        '200':
+          description: OK
+      
+    post:
+      summary: Cadastrar um telefone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                numero:
+                  type: string
+                  description: Número do usuário
+                  example: (84)98801-4548
+                user_id:
+                  type: integer
+                  description: Id do usuário
+                  example: 1
+      responses:
+        201:
+          description: Telefone criado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: O URI do novo recurso criado.
+        400:
+          description: Requisição inválida
+
+  /telefones/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      summary: Acessa um telefone
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  numero:
+                    type: string
+                  user_id:
+                    type: integer
+        404:
+          description: Não encontrado
+
+    delete:
+      summary: Apaga um telefone
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Não encontrado.
+
+    put:
+      summary: Altera um telefone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                numero:
+                  type: string
+                  description: Número do usuário
+                  example: (84)98801-4548
+                user_id:
+                  type: integer
+                  description: Id do usuário
+                  example: 1
+      responses:
+        200:
+          description: OK
+        404:
+          description: Não encontado.
+
+  /users/{user_id}/obras:
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: get
+      summary: Acessar obras de um cliente
+      responses:
+        '200':
+          description: OK
+      
+    post:
+      summary: Cadastrar uma obra
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cliente:
+                  type: string
+                  description: Cilente da obra
+                  example: Kaiane
+                localizacao:
+                  type: string
+                  description: Localização da obra
+                  example: Rua fulano de tal
+                descricao:
+                  type: string
+                  description: Descrição da obra
+                  example: Em andamento
+                user_id:
+                  type: integer
+                  description: Id do usuário
+                  example: 1
+      responses:
+        201:
+          description: Obra criada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: O URI do novo recurso criado.
+        400:
+          description: Requisição inválida
+
+  /users/{user_id}/obras/{obra_id}:
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: obra_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: get
+      summary: Acessa uma obras de um cliente
+      responses:
+        '200':
+          description: OK
+        404:
+          description: Não encontrado
+
+    delete:
+      summary: Apaga uma obra
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Não encontrado.
+
+    put:
+      summary: Altera uma obra
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cliente:
+                  type: string
+                  description: Cilente da obra
+                  example: Kaiane
+                localizacao:
+                  type: string
+                  description: Localização da obra
+                  example: Rua fulano de tal
+                descricao:
+                  type: string
+                  description: Descrição da obra
+                  example: Em andamento
+                user_id:
+                  type: integer
+                  description: Id do usuário
+                  example: 1
+      responses:
+        200:
+          description: OK
+        404:
+          description: Não encontado.
+
+  /obras/{id_obra}/despesas:
+    parameters:
+      - name: id_obras
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: get
+      summary: Acessar despesas
+      responses:
+        '200':
+          description: OK
+      
+    post:
+      summary: Cadastrar uma despesa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome da despesa
+                  example: Gastos com tijolos
+                custo:
+                  type: float
+                  description: Valor da despesa
+                  example: 50.3
+                descricao:
+                  type: string
+                  description: Descrição da despesa
+                  example: Imprevisto
+                obra_id:
+                  type: integer
+                  description: Id da obra
+                  example: 1
+      responses:
+        201:
+          description: Despesa cadastrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: O URI do novo recurso criado.
+        400:
+          description: Requisição inválida
+
+  /obras/{id_obra}/despesas/{id_despesa}:
+    parameters:
+      - name: id_obra
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: id_despesa
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      summary: Acessa uma despesa
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  custo:
+                    type: float
+                  descricao:
+                    type: string
+                  obra_id:
+                    type: integer
+        404:
+          description: Não encontrado
+
+    delete:
+      summary: Apaga uma despesa
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Não encontrado.
+
+    put:
+      summary: Altera uma despesa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome da despesa
+                  example: Gastos com tijolos
+                custo:
+                  type: float
+                  description: Valor da despesa
+                  example: 50.3
+                descricao:
+                  type: string
+                  description: Descrição da despesa
+                  example: Imprevisto
+                obra_id:
+                  type: integer
+                  description: Id da obra
+                  example: 1
+      responses:
+        200:
+          description: OK
+        404:
+          description: Não encontado.
+
+  /obras/{id_obra}/relacionados:
+    parameters:
+      - name: id_obra
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: get
+      summary: Acessar relacionados
+      responses:
+        '200':
+          description: OK
+      
+    post:
+      summary: Cadastrar um relacionado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome do relacionado
+                  example: Junin
+                custo:
+                  type: float
+                  description: Custeamento do relacionado
+                  example: 300.50
+                descricao:
+                  type: string
+                  description: Descrição
+                  example: Diária
+                obra_id:
+                  type: integer
+                  description: Id da obra
+                  example: 1
+      responses:
+        201:
+          description: Relacionado cadastrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: O URI do novo recurso criado.
+        400:
+          description: Requisição inválida
+
+  /obras/{id_obra}/relacionados/{id_relacionado}:
+    parameters:
+      - name: id_obra
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: id_relacionado
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      summary: Acessa um relacionado
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  custo:
+                    type: float
+                  descricao:
+                    type: string
+                  obra_id:
+                    type: integer
+        404:
+          description: Não encontrado
+
+    delete:
+      summary: Apaga um relacionado
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Não encontrado.
+
+    put:
+      summary: Altera um relacionado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome do relacionado
+                  example: Junin
+                custo:
+                  type: float
+                  description: Custeamento do relacionado
+                  example: 300.50
+                descricao:
+                  type: string
+                  description: Descrição
+                  example: Diária
+                obra_id:
+                  type: integer
+                  description: Id da obra
+                  example: 1
+      responses:
+        200:
+          description: OK
+        404:
+          description: Não encontado.
+
+
+                

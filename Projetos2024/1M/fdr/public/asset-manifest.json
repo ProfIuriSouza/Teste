@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1d8a8233.css",
+    "main.js": "/static/js/main.bcf39ea5.js",
+    "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "static/media/TestePassos.svg": "/static/media/TestePassos.545a6126e2895cbcacedac6c73e2679e.svg",
+    "static/media/VideoLogo.mp4": "/static/media/VideoLogo.8ab422c2964ea22fe9f0.mp4",
+    "static/media/FDR-preto.svg": "/static/media/FDR-preto.6d28f0fb9c21e8049a74f32ccd7d4949.svg",
+    "static/media/FDR.svg": "/static/media/FDR.21f28045671f2f1ddf9330f3fd27ea0d.svg",
+    "static/media/nome.mp4": "/static/media/nome.3147fe3d0bee9169a6c7.mp4",
+    "static/media/summernote.eot": "/static/media/summernote.5aea53ce2e51f1dc4694.eot",
+    "static/media/summernote.ttf": "/static/media/summernote.6587bce42b8e86c39091.ttf",
+    "static/media/summernote.woff": "/static/media/summernote.93f401f568b4fc5806b1.woff",
+    "static/media/summernote.woff2": "/static/media/summernote.f5bf9564443de5f5237a.woff2",
+    "static/media/T5.svg": "/static/media/T5.99150efcb73ff29bae5402af34b567ad.svg",
+    "static/media/fundo.svg": "/static/media/fundo.65ac8895b0ee3c83b6b178b14d5fce61.svg",
+    "static/media/T3.svg": "/static/media/T3.4e55bedc104d596fa5b91c2cc70f6aa9.svg",
+    "static/media/fundo3.svg": "/static/media/fundo3.66ba3f03a07a5ff3544c574e6a632b4e.svg",
+    "static/media/T6.svg": "/static/media/T6.4861a4151bdb8ab125dc404a749adc04.svg",
+    "static/media/Tutorial1.svg": "/static/media/Tutorial1.934d850fbd96c84225f0d284562c8b35.svg",
+    "static/media/Tutorial.svg": "/static/media/Tutorial.e33aa02fbbe3b95f6871cafbbc7bd928.svg",
+    "static/media/mais.svg": "/static/media/mais.79eb1bad3621bc7af95787caabf90f64.svg",
+    "static/media/T2.svg": "/static/media/T2.a0c69f8ce72e38a45d2ba93ae849d420.svg",
+    "static/media/T4.svg": "/static/media/T4.c1c539482edf6cdc9247ac97eacf9a87.svg",
+    "static/media/T1.svg": "/static/media/T1.6642f563526000e192bc7c2c99d38762.svg",
+    "static/media/fundo2.svg": "/static/media/fundo2.35ae7df14c5c4f5605b6a7d9db3b34c3.svg",
+    "index.html": "/index.html",
+    "main.1d8a8233.css.map": "/static/css/main.1d8a8233.css.map",
+    "main.bcf39ea5.js.map": "/static/js/main.bcf39ea5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1d8a8233.css",
+    "static/js/main.bcf39ea5.js"
+  ]
+}

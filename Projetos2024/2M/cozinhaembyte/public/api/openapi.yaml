@@ -1,0 +1,1225 @@
+openapi: "3.0.1"
+info:
+  title: Receitas Culinarias
+  description: >
+    Aplicação de Receitas Culinárias.
+    Um website de receitas culinárias é uma aplicação em que usuários divulgam suas receitas para outros usuários da rede.
+    Esses receitas possuem título, descrição, ingredientes, modo de preparo, tempo de preparo e uma imagem correspondente.
+    As receitas também podem ser avaliadas pelos usuários, com estrelas de 1 a 5, o que aparece é a média das avaliações.
+    As receitas podem ser comentadas por outros usuários, para construir uma feedback da receita ao dono da receita.
+    Nessa versão, há cadastro de todas as entidades com suporte geral, mas não há segurança de dados.
+  version: "2.0"
+servers:
+  - url: http://{host}:{porta}/api
+    variables:
+      host:
+        default: localhost
+      porta:
+        default: "8000"
+
+paths:
+  /register:
+    post:
+      operationId: registerUser
+      summary: Registar um novo usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/registro"
+      responses:
+        200:
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    message:
+                      type: string
+                      example: Usuário cadastrado com sucesso!
+                    user_id:
+                      type: number
+                      example: 1
+                    access_token:
+                      type: string
+                      example: 1|#%3n5j2kç32ç325321k2v4kv34
+                    token_type:
+                      type: string
+                      example: Bearer
+        422:
+          description: Erro na validação de dados.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    message:
+                      type: string
+                      example: Erro de validação
+                    errors:
+                      type: array
+                      items:
+                        properties:
+                          nome:
+                            type: string
+                          email:
+                            type: string
+                          senha:
+                            type: string
+  /login:
+    post:
+      operationId: loginUser
+      summary: Logar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/login"
+      responses:
+        200:
+          description: Usuário autenticado com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    message:
+                      type: string
+                      example: Usuário cadastrado com sucesso!
+                    user_id:
+                      type: number
+                      example: 1
+                    access_token:
+                      type: string
+                      example: 1|#%3n5j2kç32ç325321k2v4kv34
+                    token_type:
+                      type: string
+                      example: Bearer
+        404:
+          description: Usuário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não encontrado."
+  /logout:
+    post:
+      operationId: logoutUser
+      summary: Desconectar usuário
+      security:
+        - BearerAuth: []
+
+      responses:
+        201:
+          description: Usuário desconectado com sucesso
+        404:
+          description: Usuário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não encontrado."
+
+  /isAuthenticated:
+    post:
+      operationId: isAuthenticated
+      summary: Verificar se o usuário está autenticado
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Verificação realizada
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+  /usuarios:
+    get:
+      operationId: UsuarioIndex
+      summary: Retornar todos os usuários
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/usuario"
+
+  /usuarios/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      operationId: UsuarioShow
+      summary: Acessar informações de usuário
+      responses:
+        200:
+          description: Usuário encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/usuario"
+        404:
+          description: Usuário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não encontrado."
+
+    put:
+      operationId: UsuarioUpdate
+      summary: Alterar informações de usuário
+      security:
+        - BearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/usuario"
+
+      responses:
+        200:
+          description: Usuário alterado.
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Usuário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não encontrado."
+        422:
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erro de validação."
+                  errors:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        items:
+                          type: string
+                        example: ["Este email já está em uso."]
+                      name:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O nome fornecido é inválido."]
+                      senha:
+                        type: array
+                        items:
+                          type: string
+                        example: ["A senha deve ter pelo menos 8 caracteres."]
+
+    delete:
+      operationId: UsuarioDestroy
+      summary: Apagar usuário
+      security:
+        - BearerAuth: []
+
+      responses:
+        204:
+          description: Usuário excluído.
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Usuário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não encontrado."
+
+  /receitas:
+    get:
+      operationId: ReceitaIndex
+      summary: Retornar todas as Receitas
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/receita"
+    post:
+      operationId: ReceitaStore
+      summary: Criar uma nova receita
+      security:
+        - BearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/receita"
+      responses:
+        201:
+          description: Receita Criada
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        422:
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erro de validação."
+                  errors:
+                    type: object
+                    properties:
+                      usuario_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O usuário indicado não existe"]
+                      titulo:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          ["O título deve ter, no mínimo, 10 caracteres."]
+                      categoria:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          ["A categoria deve ter, no mínimo, 5 caracteres."]
+                      ingredientes:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          [
+                            "O campo ingredientes devem ser preenchido.",
+                            "O campo ingredientes deve ser um array.",
+                            "Os ingredientes devem ser uma lista de 1 até n ingredientes.",
+                            "Cada ingrediente precisa de um nome e quantidade.",
+                            "O campo de nome deve ser uma string",
+                            "O campo de quantidade deve ser uma string: uma colher, 1x, 500g...",
+                          ]
+                      modo_de_preparo:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          [
+                            O campo modo de preparo deve ser um array.,
+                            O campo modo_de_preparo de ser preenchido.,
+                            O modo de preparo deve possuir uma lista de 1 até n passos.,
+                            Cada passo do modo de preparo precisa ter uma descricao.,
+                            Cada descrição deve ser uma string.,
+                          ]
+
+                      tempo_de_preparo:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          [
+                            O campo tempo de preparo deve ser preenchido.,
+                            "O campo tempo de preparo deve ser uma string: 1 hora, 30 minutos, 3 dias...",
+                          ]
+                      imagem:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O arquivo de imagem precisa ser preenchido."]
+
+  /receitas/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      operationId: ReceitaShow
+      summary: Acessar informações de receita
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receita"
+        404:
+          description: Receita não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Receita não encontrada."
+
+    post:
+      operationId: ReceitaUpdate
+      summary: Alterar informações de receita
+      parameters:
+        - name: _method
+          in: query
+          description: "Método HTTP sobreescrito. Use PUT para simular uma requisição PUT."
+          required: false
+          schema: 
+            type: string 
+            enum: [PUT]
+            default: PUT
+      security:
+        - BearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/receita"
+      responses:
+        200:
+          description: OK
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Receita não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Receita não encontrada."
+        422:
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erro de validação."
+                  errors:
+                    type: object
+                    properties:
+                      usuario_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O usuário indicado não existe"]
+                      titulo:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          ["O título deve ter, no mínimo, 10 caracteres."]
+                      categoria:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          ["A categoria deve ter, no mínimo, 5 caracteres."]
+                      ingredientes:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          [
+                            "O campo ingredientes devem ser preenchido.",
+                            "O campo ingredientes deve ser um array.",
+                            "Os ingredientes devem ser uma lista de 1 até n ingredientes.",
+                            "Cada ingrediente precisa de um nome e quantidade.",
+                            "O campo de nome deve ser uma string",
+                            "O campo de quantidade deve ser uma string: uma colher, 1x, 500g...",
+                          ]
+                      modo_de_preparo:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          [
+                            O campo modo de preparo deve ser um array.,
+                            O campo modo_de_preparo de ser preenchido.,
+                            O modo de preparo deve possuir uma lista de 1 até n passos.,
+                            Cada passo do modo de preparo precisa ter uma descricao.,
+                            Cada descrição deve ser uma string.,
+                          ]
+
+                      tempo_de_preparo:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          [
+                            O campo tempo de preparo deve ser preenchido.,
+                            "O campo tempo de preparo deve ser uma string: 1 hora, 30 minutos, 3 dias...",
+                          ]
+                      imagem:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O arquivo de imagem precisa ser preenchido."]
+
+    delete:
+      operationId: ReceitaDestroy
+      summary: Apagar receita
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: OK
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Receita não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Receita não encontrada."
+
+  /avaliacoes:
+    get:
+      operationId: AvaliacaoIndex
+      summary: Retorna todos as avaliações
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/avaliacao"
+    post:
+      operationId: AvaliacaoStore
+      summary: Criar uma nova avaliação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/avaliacao"
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: Avaliação Criada
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        422:
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erro de validação."
+                  errors:
+                    type: object
+                    properties:
+                      usuario_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O usuário indicado não existe. "]
+                      receita_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["A receita indicada não existe. "]
+                      estrelas:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          ["O campo estrelas precisa de um valor entre 1 e 5. "]
+
+  /avaliacoes/{receita_id}:
+    parameters:
+      - name: receita_id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      operationId: Medium
+      summary: Retornar média de notas de uma receita
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 4.5
+        404:
+          description: Não foi possível realizar a média de avaliações dessa receita.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Avaliação não encontrada."
+
+  /avaliacoes/{usuario_id}/{receita_id}:
+    parameters:
+      - name: usuario_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: receita_id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      operationId: AvaliacaoShow
+      summary: Acessar informações de uma avaliação de um usuário em uma receita
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/avaliacao"
+        404:
+          description: Avaliação não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Avaliação não encontrada"
+
+    put:
+      operationId: AvaliacaoUpdate
+      summary: Alterar informações de uma avaliação de um usuario em uma receita
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/avaliacao"
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: Avaliação atualizada
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Avaliação não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Avaliação não encontrada."
+        422:
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erro de validação."
+                  errors:
+                    type: object
+                    properties:
+                      usuario_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O usuário indicado não existe. "]
+                      receita_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["A receita indicada não existe. "]
+                      estrelas:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          ["O campo estrelas precisa de um valor entre 1 e 5. "]
+
+    delete:
+      operationId: AvaliacaoDestroy
+      summary: Apagar avaliação
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: Avaliação excluída
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Avaliação não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Avaliação não encontrada."
+
+  /comentarios:
+    get:
+      operationId: ComentarioIndex
+      summary: Retorna todos os comentario
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/comentario"
+    post:
+      operationId: ComentarioStore
+      summary: Criar um novo comentario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/comentario"
+      security:
+        - BearerAuth: []
+
+      responses:
+        201:
+          description: Comentário Criado
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        422:
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erro de validação."
+                  errors:
+                    type: object
+                    properties:
+                      usuario_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O usuário indicado não existe. "]
+                      receita_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["A receita indicada não existe. "]
+                      texto:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O comentário precisa de um texto. "]
+
+  /comentarios/{receita_id}:
+    parameters:
+      - name: receita_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: ComentariosDaReceita
+      summary: Devolver todos os comentários de uma receita
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/comentario"
+        404:
+          description: Comentários da receita não encontrados.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Comentários não encontrado."
+
+  /comentarios/{usuario_id}/{receita_id}:
+    parameters:
+      - name: usuario_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: receita_id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      operationId: ComentarioShow
+      summary: Acessar informações do comentário de um usuário em uma receita
+      responses:
+        200:
+          description: Comentário encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/comentario"
+        404:
+          description: Comentário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Comentário não encontrado."
+
+    put:
+      operationId: ComentarioUpdate
+      summary: Alterar informações do comentario de um usuario em uma receita
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/comentario"
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: Comentário atualizado
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Comentário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Comentário não encontrado."
+        422:
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erro de validação."
+                  errors:
+                    type: object
+                    properties:
+                      usuario_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O usuário indicado não existe. "]
+                      receita_id:
+                        type: array
+                        items:
+                          type: string
+                        example: ["A receita indicada não existe. "]
+                      texto:
+                        type: array
+                        items:
+                          type: string
+                        example: ["O comentário precisa de um texto. "]
+
+    delete:
+      operationId: ComentarioDestroy
+      summary: Apagar comentario
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Comentário excluído
+        401:
+          description: Usuário não autenticado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autenticado."
+        403:
+          description: Usuário não autorizado a utilizar esse recurso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário não autorizado."
+        404:
+          description: Comentário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Comentário não encontrado."
+
+components:
+  schemas:
+    registro:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Ana
+        matricula:
+          type: string
+          nullable: true
+          example: 2021001101023
+        email:
+          type: string
+          example: ana.julia@ifrn.edu.br
+        senha:
+          type: string
+          example: senhaForte345@#
+
+    login:
+      type: object
+      properties:
+        email:
+          type: string
+          example: ana.julia@ifrn.edu.br
+        senha:
+          type: string
+          example: senhaForte345@#
+
+    usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nome:
+          type: string
+          example: Ana
+        matricula:
+          type: string
+          nullable: true
+          example: 2021001101023
+        email:
+          type: string
+          example: ana.julia@ifrn.edu.br
+        senha:
+          type: string
+          example: senhaForte345@#
+
+    receita:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID da receita
+          example: 1
+        usuario_id:
+          type: integer
+          description: ID do Dono da Receita
+          example: 2
+        titulo:
+          type: string
+          description: Título da Receita
+          example: Frango Assado
+        categoria:
+          type: string
+          description: Categoria da receita
+          example: Almoço
+        ingredientes:
+          type: string
+          description: Ingredientes da receita, separados por virgula
+          example: "Maçã: 3x Unidades, Farinha: 1kg, Sal: 1 colher de sopa"
+        modo_de_preparo:
+          type: string
+          description: Modo de preparo da receita, separados por virgula
+          example: "Corte as maçãs, misture com farinha, adicione o sal, asse no forno."
+        tempo_de_preparo:
+          type: string
+          example: "40 minutos"
+        imagem:
+          type: string
+          format: binary
+          description: Arquivo de imagem a ser enviado
+
+    avaliacao:
+      type: object
+      properties:
+        receita_id:
+          type: integer
+          example: 1
+        usuario_id:
+          type: integer
+          example: 2
+        estrelas:
+          type: integer
+          enum: [1, 2, 3, 4, 5]
+          example: 5
+
+    comentario:
+      type: object
+      properties:
+        receita_id:
+          type: integer
+          example: 1
+        usuario_id:
+          type: integer
+          example: 2
+        texto:
+          type: string
+          example: "Muito boa a receita!"
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

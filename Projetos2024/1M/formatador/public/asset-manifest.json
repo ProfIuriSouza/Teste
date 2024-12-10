@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9c2f5f43.css",
+    "main.js": "/static/js/main.765b12a6.js",
+    "static/js/453.8ab44547.chunk.js": "/static/js/453.8ab44547.chunk.js",
+    "static/media/passo2.png": "/static/media/passo2.0576ff07f03dd6116b85.png",
+    "static/media/passo3.png": "/static/media/passo3.2e6ae8d5af80abbbd5a6.png",
+    "static/media/passo1.png": "/static/media/passo1.e77515a0cf5e8aaa781b.png",
+    "static/media/summernote.eot": "/static/media/summernote.5aea53ce2e51f1dc4694.eot",
+    "static/media/summernote.ttf": "/static/media/summernote.6587bce42b8e86c39091.ttf",
+    "static/media/newDocOficial.png": "/static/media/newDocOficial.6aed30edfd8ec386cf72.png",
+    "static/media/summernote.woff": "/static/media/summernote.93f401f568b4fc5806b1.woff",
+    "static/media/summernote.woff2": "/static/media/summernote.f5bf9564443de5f5237a.woff2",
+    "static/media/logo.svg": "/static/media/logo.7a17ef29017f75d6aba8eef8170fca4e.svg",
+    "index.html": "/index.html",
+    "main.9c2f5f43.css.map": "/static/css/main.9c2f5f43.css.map",
+    "main.765b12a6.js.map": "/static/js/main.765b12a6.js.map",
+    "453.8ab44547.chunk.js.map": "/static/js/453.8ab44547.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9c2f5f43.css",
+    "static/js/main.765b12a6.js"
+  ]
+}

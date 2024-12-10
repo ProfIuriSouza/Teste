@@ -1,0 +1,266 @@
+openapi: '3.0.1'
+info:
+  title: Formatador ABNT
+  description:
+    O projeto “Formatador de textos para norma ABNT” tem como propósito ajudar o usuário, que em sua maioria são alunos, 
+    mas podem ser de variados grupos, a formatar quaisquer texto para os requisitos da ABNT, que são amplamente utilizados em todas as áreas.
+  version: '0.9'
+
+servers:
+  - url: http://{host}:{porta}/api
+    variables:
+      host: 
+        default: localhost
+      porta: 
+        default: '8000'
+
+paths:
+  /signup:
+    post:
+      summary: Cria o usuário em questão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome de usuário
+                email:
+                  type: string
+                  description: Email do usuário
+                senha:
+                  type: string
+                  description: Senha do perfil
+      responses:
+        201:
+          description: Usuário criado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: o URI do novo Usuario
+        400:
+          description: Requisição inválida
+  /login:
+    post:
+      summary: Loga o usuário em questão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email do usuário
+                senha:
+                  type: string
+                  description: Senha do perfil
+      responses:
+        200:
+          description: Usuário logado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: o URI do Usuario logado
+        404:
+          description: Usuario não encontrado
+  /logout:
+    post:
+      summary: Desloga o usuário em questão
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: Usuário deslogado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: Indica se o logout foi bem-sucedido
+                  msg:
+                    type: string
+                    description: Mensagem de confirmação
+        401:
+          description: Token inválido ou não fornecido
+        500:
+          description: Erro interno no servidor
+
+  /id:
+    get:
+      summary: Retorna o ID do usuário logado
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: o ID do Usuario logado
+        404:
+          description: Usuario não encontrado
+
+  /usuarios/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get: 
+      summary: Acessa um usuario
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+        404:
+          description: Usuário não encontrado
+    put: 
+      summary: Atualiza um usuario
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Novo nome do usuário
+                email:
+                  type: string
+                  description: Novo email do usuário
+                senha:
+                  type: string
+                  description: Nova senha do usuário
+      responses:
+        200:
+          description: OK
+        404:
+          description: Documento não encontrado
+    delete:
+      summary: Apaga um usuário
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Usuário não encontrado  
+          
+  /usuarios/{id}/documentos:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Lista de documentos de um usuário
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: OK
+        404:
+          description: Página não encontrada
+
+  /documentos:
+    post:
+      summary: Cria um novo documento
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                texto:
+                  type: string
+                  description: Texto do documento
+                usu_id:
+                  type: string
+                  description: Id do usuário dono do documento
+      responses:
+        200:
+          description: Usuário logado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: o URI do Usuario logado
+
+  /documentos/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    put:
+      summary: Altera um documento
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                texto:
+                  type: string
+                  description: Texto a ser alterado
+      responses:
+        200:
+          description: OK
+        404:
+          description: Documento não encontrado
+    
+    delete:
+      summary: Apaga um documento
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Documento não encontrado
+
+components:
+  securitySchemes:
+    bearer: 
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.5c665fe8.css",
+    "main.js": "/static/js/main.aac5b3d4.js",
+    "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "static/media/cozinhando.jpeg": "/static/media/cozinhando.ebd66c11f28176661a40.jpeg",
+    "static/media/logo_projeto.png": "/static/media/logo_projeto.f335ccb4dd1a732f41f4.png",
+    "static/media/telefone.jpg": "/static/media/telefone.58169f68f640420be1a3.jpg",
+    "static/media/endereço.png": "/static/media/endereço.70d555da3f84b92d7687.png",
+    "static/media/insta.png": "/static/media/insta.c72d65db3f1c6181cf27.png",
+    "index.html": "/index.html",
+    "main.5c665fe8.css.map": "/static/css/main.5c665fe8.css.map",
+    "main.aac5b3d4.js.map": "/static/js/main.aac5b3d4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5c665fe8.css",
+    "static/js/main.aac5b3d4.js"
+  ]
+}
