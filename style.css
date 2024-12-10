@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-image: url('https://img.freepik.com/vetores-gratis/fundo-branco-tecnologia_23-2148390329.jpg');
+    
+    padding: 20px;
+    text-align: center;
+    
+}
+
+
+.imagem{
+    max-width: 200px;
+    max-height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    margin: 50px;
+}
+
+body{
+    background-image: url('https://img.freepik.com/vetores-gratis/fundo-branco-tecnologia_23-2148390329.jpg');
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+}
+
+div{
+    position: relative;
+}
+
+.card {
+    width: 300px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    flex: 1;
+    max-width: 300px;
+    transition: transform 0.2s ease-in-out;
+    background-color: #F5F5F5;
+    
+}
+
+.card:hover {
+    transform: scale(1.1);
+    background-color: #F0F8FF;
+  }
+
+.card img {
+    object-fit: cover;    
+    border-radius: 10px;
+    max-width: 250px;
+    max-height: 250px;
+}
+
+footer {
+    background-color: #F0F8FF;
+    padding: 20px;
+    text-align: center;
+}
+
+p{
+    padding: 20px;
+    text-align: justify;
+    margin-bottom: 30px;
+    color: rgb(92, 90, 90);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 18px;
+}
+
+img{
+    object-fit: cover;    
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+
+}
+
+h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+
+h2{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+
+}
+
+
+h4{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 22px;
+    font-style:italic;
+}
